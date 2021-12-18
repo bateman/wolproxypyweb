@@ -2,7 +2,7 @@ version: '3'
 
 services:
   wolproxypy:
-    image: wolproxypyweb:latests
+    image: wolproxypyweb:latest
     build: .
     container_name: wolproxypyweb
     restart: unless-stopped
