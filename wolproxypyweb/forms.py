@@ -97,8 +97,8 @@ class EditUserProfileForm(FlaskForm):
     )
     submit = SubmitField("Update")
 
-    def __init__(self, original_username: str, original_email: str, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, original_username: str, original_email: str):
+        super().__init__()
         self.original_username = original_username
         self.original_email = original_email
 
