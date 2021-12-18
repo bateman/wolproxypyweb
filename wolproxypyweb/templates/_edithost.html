@@ -1,0 +1,22 @@
+<tr class="with-click" onclick="select_row('{{ host.id }}')" id="edithost-{{ host.id }}">
+    <td>
+        {{ host.name }}
+    </td>
+    <td>
+        {{ host.macaddress }}
+    </td>
+    <td>
+        {{ host.ipaddress }}
+    </td>
+    <td>
+        {{ host.port }}
+    </td>
+    <td>
+        {{ host.interface }}
+    </td>
+    <td>
+        <a href="{{url_for('delete_host', hostid=host.id)}}">
+            <img alt="Delete" src="{{url_for('.static', filename='images/trash.png')}}" width="25">
+        </a>
+    </td>
+</tr>

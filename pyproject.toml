@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "wolproxypyweb"
+version = "0.1.0"
+description = "A Flask, responsive web app for routing Wake-On-LAN packets via Internet"
+authors = ["Fabio Calefato <fabio.calefato@uniba.it>"]
+license = "MIT"
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.scripts]
+wolproxypyweb = "main:run"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pretty-errors = "^1.2.25"
+rich = "^10.14.0"
+Flask = "^2.0.2"
+Flask-Login = "^0.5.0"
+Flask-WTF = "^1.0.0"
+Flask-Bootstrap = "^3.3.7.1"
+SQLAlchemy = "^1.4.27"
+Flask-SQLAlchemy = "^2.5.1"
+oauthlib = "^3.1.1"
+pyOpenSSL = "^21.0.0"
+requests = "^2.26.0"
+email-validator = "^1.1.3"
+python-dotenv = "^0.19.2"
+poetry-dotenv-plugin = "^0.1.0-alpha.2"
+
+[tool.poetry.dev-dependencies]
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+black = "^21.12b0"
+pylint = "^2.12.2"
+mypy = "^0.920"
+bandit = "^1.7.1"
+autopep8 = "^1.6.0"
+pre-commit = "^2.16.0"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+pydocstyle = "^6.1.1"
+mkdocs = "^1.2.3"
+mkdocs-autorefs = "^0.3.0"
+mkdocstrings = "^0.16.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

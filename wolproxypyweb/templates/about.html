@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>wolproxypy</h1>
+    <div>
+        <p>
+            wolproxypy is a all-in-one solution for wake on lan. It is made of three main components:
+        </p>
+        <p>
+            <h3>Core</h3>
+            Available through PyPI, wolproxypy core is a python library that provides a simple commandline
+            interface to wake hosts on a lan.
+        </p>
+        <p>
+            <h3>API</h3>
+            Developed using FastAPI, the wolproxypy api expose the core functionality as a RESTful API.
+            The API can be easily deployed via Docker.
+        </p>
+        <p>
+            <h3>Wep app</h3>
+            wolproxypy web is application that provides a simple user interface to manage and wake up hosts
+            from your browser. The app is responsive as it is built using Flask and Bootstrap.
+        </p>
+    </div>
+    <div>
+        <p>
+            Feel free to contribute to this project on <a href="https://git" target="_blank">GitHub</a>.
+        </p>
+    </div>
+    <div>
+        <p>
+            <a href="/index">Back</a>
+        </p>
+    </div>
+
+{% endblock %}

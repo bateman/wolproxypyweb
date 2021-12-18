@@ -1,0 +1,36 @@
+# Project information
+site_name: wolproxypy
+site_url: https://github.com/bateman/wolproxypyweb
+site_description: A Flask, responsive web app for routing Wake-On-LAN packets via Internet.
+site_author: Fabio Calefato <fabio.calefato@uniba.it>
+
+# Repository
+repo_url: https://github.com/bateman/wolproxypyweb
+repo_name: bateman/wolproxypyweb
+edit_uri: "" #disables edit button
+
+# Copyright
+copyright: MIT License 2021, Fabio Calefato
+
+# Configuration
+theme:
+  name: readthedocs
+
+plugins:
+  - search
+  - autorefs
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: false
+      custom_templates: templates
+      watch:
+        - wolproxypyweb
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Docstrings:
+    - Web module: web.md

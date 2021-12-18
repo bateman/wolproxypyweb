@@ -1,0 +1,22 @@
+<tr class="with-click" onclick="select_row('{{ host.id }}')" id="addhost-{{ host.id }}">
+    <td>
+        {{ host.name }}
+    </td>
+    <td>
+        {{ host.macaddress }}
+    </td>
+    <td>
+        {{ host.ipaddress }}
+    </td>
+    <td>
+        {{ host.port }}
+    </td>
+    <td>
+        {{ host.interface }}
+    </td>
+    <td>
+        <a href="{{url_for('wake_host', hostid=host.id)}}">
+            <img alt="Wake" src="{{url_for('.static', filename='images/wol.png')}}" width="20">
+        </a>
+    </td>
+</tr>
