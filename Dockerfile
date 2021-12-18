@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.9-slim
+FROM python:slim
 
 # Label docker image
 LABEL maintainer="Fabio Calefato <fabio.calefato@uniba.it>"
@@ -21,6 +21,8 @@ RUN apt-get update \
 # Copy
 COPY wolproxypyweb wolproxypyweb
 COPY config config
+COPY .flaskenv .flaskenv
+COPY main.py main.py
 
 RUN mkdir -p logs \
     && chmod -R 777 logs
