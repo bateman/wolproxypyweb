@@ -43,6 +43,20 @@ class User(UserMixin, BaseModel):
         self.username = username
         self.set_password(password)
 
+    def __eq__(self, other: object) -> bool:
+        """Compare two users.
+
+        Args:
+            other (object): The other to compare to.
+
+        Returns:
+            equal (bool): True if the usernames are equal.
+        """
+        equal = False
+        if isinstance(other, User):
+            equal = self.number == other.number
+        return equal
+
     def set_password(self, password: str) -> None:
         """Set the hased password for the user.
 
