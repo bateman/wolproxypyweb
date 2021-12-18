@@ -17,7 +17,7 @@ def run() -> None:
     Returns:
         None
     """
-    app.run(debug=False)
+    app.run(host="0.0.0.0", debug=False)
 
 
 if __name__ == "__main__":

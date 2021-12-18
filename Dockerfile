@@ -31,4 +31,4 @@ RUN mkdir -p logs \
 EXPOSE 80
 
 # Start app, overrides config/uvicorn.config
-CMD ["flask", "run"]
+CMD ["flask", "run", "-h", "0.0.0.0", "-p", "80"]
