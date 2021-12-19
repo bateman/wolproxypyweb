@@ -69,7 +69,7 @@ clean:
 lint: $(INSTALL_STAMP)
 	$(POETRY) run isort --profile=black --check-only ./tests/ $(NAME)
 	$(POETRY) run black --check ./tests/ $(NAME) --diff
-	$(POETRY) run flake8 --max-line-length 100 ./tests/ $(NAME)
+	$(POETRY) run flake8 --max-line-length 120 ./tests/ $(NAME)
 	$(POETRY) run mypy --ignore-missing-imports ./tests/ $(NAME)
 	$(POETRY) run bandit -r $(NAME) -s B608
 
@@ -89,4 +89,4 @@ test: $(INSTALL_STAMP)
 .PHONY: docker
 docker: $(INSTALL_STAMP)
 	@if [ -z $(DOCKER) ]; then echo "Docker could not be found. See https://docs.docker.com/compose/install/"; exit 2; fi
-	$(DOCKER) build --force-rm --no-cache
+	$(DOCKER) build --force-rm
