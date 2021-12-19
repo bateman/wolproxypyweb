@@ -89,4 +89,4 @@ test: $(INSTALL_STAMP)
 .PHONY: docker
 docker: $(INSTALL_STAMP)
 	@if [ -z $(DOCKER) ]; then echo "Docker could not be found. See https://docs.docker.com/compose/install/"; exit 2; fi
-	$(DOCKER) build --force-rm
+	$(DOCKER) build --force-rm --no-cache
