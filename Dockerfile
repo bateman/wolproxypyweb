@@ -23,6 +23,8 @@ COPY wolproxypyweb wolproxypyweb
 COPY config config
 COPY .flaskenv .flaskenv
 COPY main.py main.py
+COPY entrypoint.sh entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 RUN mkdir -p logs \
     && chmod -R 777 logs
@@ -30,5 +32,5 @@ RUN mkdir -p logs \
 # Export ports
 EXPOSE 80
 
-# Start app, overrides config/uvicorn.config
-CMD ["flask", "run", "-h", "0.0.0.0", "-p", "80"]
+# Run start script
+ENTRYPOINT ["./entrypoint.sh"]
