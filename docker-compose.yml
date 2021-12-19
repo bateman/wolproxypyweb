@@ -9,7 +9,8 @@ services:
     ports:
       - "5000:80"
     volumes:
-      - ./logs:/logs:rw
+      - ./logs:/logs
+      - ./db:/db
     networks:
       - app-network
 

@@ -26,8 +26,8 @@ COPY main.py main.py
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x entrypoint.sh
 
-RUN mkdir -p logs \
-    && chmod -R 777 logs
+RUN mkdir -p logs
+RUN mkdir -p db
 
 # Export ports
 EXPOSE 80

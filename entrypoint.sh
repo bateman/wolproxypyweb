@@ -1,10 +1,8 @@
 #!/bin/bash
 # this script is used to boot the Docker container
 
-mkdir -p /logs/gunicorn
-touch /logs/gunicorn/error.log
-touch /logs/gunicorn/access.log
-chmod -R +r /logs/gunicorn
+touch /logs/error.log
+touch /logs/access.log
 
 exec gunicorn main:app \
     --bind=0.0.0.0:80 \
