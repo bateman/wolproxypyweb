@@ -18,11 +18,8 @@ def create_database(web_app: Flask) -> SQLAlchemy:
         db (SQLAlchemy): The database.
     """
     # set the database uniform resource identifier for the database
-    db_uri = (
-        f"{db_config['database']['protocol']}{db_config['database']['path']}"
-        "{db_config['database']['name']}"
-    )
-    logger.debug("Database URI: %s", db_uri)
+    db_uri = f"{db_config['database']['protocol']}{db_config['database']['path']}{db_config['database']['name']}"
+    logger.info("Database URI: %s", db_uri)
     web_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 
     # create an instance of the database module
