@@ -16,6 +16,7 @@ python = "^3.9"
 pretty-errors = "^1.2.25"
 rich = "^10.14.0"
 uvicorn = {extras = ["standard"], version = "^0.16.0"}
+gunicorn = "^20.1.0"
 Flask = "^2.0.2"
 Flask-Login = "^0.5.0"
 Flask-WTF = "^1.0.0"
