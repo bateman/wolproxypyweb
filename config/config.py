@@ -43,7 +43,7 @@ pretty_errors.configure(
 class ApiConfig:
     API_PROTO = os.environ.get("API_PROTOCOL", "http")
     API_HOST = os.environ.get("API_HOST", "0.0.0.0")
-    API_PORT = os.environ.get("API_PORT", "5000")
+    API_PORT = os.environ.get("API_PORT", "8000")
 
 
 # Flask
