@@ -199,10 +199,7 @@ class Host(BaseModel):
         }
 
     def __repr__(self) -> str:
-        return (
-            f"Host {self.name} <Mac: {self.macaddress}, port: {self.port},"
-            "IP: {self.ipaddress}, interface: {self.interface}>"
-        )
+        return f"Host {self.name} <Mac: {self.macaddress}, port: {self.port} IP: {self.ipaddress}, interface: {self.interface}>"
 
 
 logger.info("ORM classes loaded.")

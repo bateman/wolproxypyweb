@@ -44,12 +44,9 @@ def home() -> str:
         elif form.wake.data:
             try:
                 logger.info("Waking %s" % host)
-                response = requests.get(
-                    url=(
-                        f"{ApiConfig.API_PROTO}://{ApiConfig.API_HOST}:"
-                        "{ApiConfig.API_PORT}/mac/{host.macaddress}"
-                    )
-                )
+                url = f"{ApiConfig.API_PROTO}://{ApiConfig.API_HOST}:{ApiConfig.API_PORT}/mac/{host.macaddress}"
+                logger.info("Sending request to %s" % url)
+                response = requests.get(url=url)
                 logger.debug("Response %s" % response)
                 flash("Wake-on-lan packet sent to %s" % host)
             except Exception as e:
