@@ -11,6 +11,8 @@ services:
     volumes:
       - ./logs:/logs
       - ./db:/db
+    env_file:
+      - api.env
     networks:
       - app-network
 
