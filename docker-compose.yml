@@ -20,6 +20,7 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET})
       - SECRET_KEY=${SECRET_KEY}
+    user: "${UID}:${GID}"
     networks:
       - app-network
 
