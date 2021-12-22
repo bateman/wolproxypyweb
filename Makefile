@@ -77,15 +77,15 @@ clean:
 
 .PHONY: lint
 lint: $(INSTALL_STAMP)
-	$(POETRY) run isort --profile=black --check-only ./tests/ $(NAME)
+	$(POETRY) run isort --check-only ./tests/ $(NAME)
 	$(POETRY) run black --check ./tests/ $(NAME) --diff
-	$(POETRY) run flake8 --max-line-length 120 ./tests/ $(NAME)
-	$(POETRY) run mypy --ignore-missing-imports ./tests/ $(NAME)
+	$(POETRY) run flake8 ./tests/ $(NAME)
+	$(POETRY) run mypy ./tests/ $(NAME)
 	$(POETRY) run bandit -r $(NAME) -s B608
 
 .PHONY: format
 format: $(INSTALL_STAMP)
-	$(POETRY) run isort --profile=black ./tests/ $(NAME)
+	$(POETRY) run isort ./tests/ $(NAME)
 	$(POETRY) run black ./tests/ $(NAME)
 
 .PHONY: precommit
