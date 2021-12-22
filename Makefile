@@ -48,7 +48,7 @@ update: pyproject.toml
 	touch $(INSTALL_STAMP)
 
 production: $(PRODUCTION_STAMP)
-$(PRODUCTION_STAMP): pyproject.toml
+$(PRODUCTION_STAMP): pyproject.toml poetry.lock
 	@if [ -z $(POETRY) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
 	$(POETRY) install --no-root --no-dev --no-interaction
 	touch $(PRODUCTION_STAMP)
@@ -66,7 +66,7 @@ $(EXPORT_STAMP): pyproject.toml poetry.lock
 	$(POETRY) export -f requirements.txt --output requirements.txt --dev --without-hashes
 	touch $(EXPORT_STAMP)
 
-docs: $(EXPORT_STAMP)
+docs: export
 	@if [ -z $(POETRY) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
 	$(POETRY) run mkdocs build
 
