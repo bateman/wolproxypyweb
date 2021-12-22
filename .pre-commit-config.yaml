@@ -65,6 +65,7 @@ repos:
         types: [pyi]
         args:
         - "--profile=black"
+        - "--skip_gitignore"
 
   - repo: https://github.com/psf/black
     rev: 21.12b0
