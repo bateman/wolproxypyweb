@@ -13,6 +13,7 @@ wolproxypyweb = "main:run"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+setuptools = "^60.0.4"
 pretty-errors = "^1.2.25"
 rich = "^10.14.0"
 uvicorn = {extras = ["standard"], version = "^0.16.0"}
@@ -36,7 +37,7 @@ flake8 = "^4.0.1"
 black = "^21.12b0"
 pylint = "^2.12.2"
 mypy = "^0.920"
-bandit = "^1.7.1"
+bandit = {extras = ["toml"], version = "^1.7.1"}
 pre-commit = "^2.16.0"
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
@@ -46,7 +47,7 @@ mkdocs-autorefs = "^0.3.0"
 mkdocstrings = "^0.16.2"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.0", "setuptools>=60.0.4"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
@@ -55,3 +56,7 @@ line_length = 120
 [tool.isort]
 profile = "black"
 skip_gitignore = true
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_unused_configs = true
