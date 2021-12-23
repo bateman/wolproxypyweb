@@ -105,7 +105,7 @@ repos:
         additional_dependencies:
           - types-dataclasses
           - types-requests
-        args: [--ignore-missing-imports,--warn_unused_configs]
+        args: [--ignore-missing-imports]
         exclude: ^(docs/)
 
   - repo: https://github.com/pycqa/pydocstyle
