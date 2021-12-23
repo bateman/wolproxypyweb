@@ -3,9 +3,10 @@ INSTALL_STAMP := .install.stamp
 PRODUCTION_STAMP := .production.stamp
 EXPORT_STAMP := .export.stamp
 BUILD_STAMP := .build.stamp
+PRECOMMIT_CONF := .pre-commit-config.yaml
+SRC_DIRS := $(NAME) config/
 POETRY := $(shell command -v poetry 2> /dev/null)
 DOCKER := $(shell command -v docker-compose 2> /dev/null)
-PRECOMMIT_CONF := .pre-commit-config.yaml
 
 .DEFAULT_GOAL := help
 
@@ -77,16 +78,17 @@ clean:
 
 .PHONY: lint
 lint: $(INSTALL_STAMP)
-	$(POETRY) run isort --check-only ./tests/ $(NAME)
-	$(POETRY) run black --check ./tests/ $(NAME) --diff
-	$(POETRY) run flake8 ./tests/ $(NAME)
-	$(POETRY) run mypy ./tests/ $(NAME)
-	$(POETRY) run bandit -r $(NAME) -s B608
+	$(POETRY) run isort --check-only tests/ $(SRC_DIRS)
+	$(POETRY) run black --check tests/ $(SRC_DIRS) --diff
+	$(POETRY) run flake8 --max-line-length 120 --ignore=E203,E266,E501,W503,F403,F401,E402,B008,FS001,FS003 tests/ $(SRC_DIRS)
+	$(POETRY) run mypy tests/ $(SRC_DIRS)
+	$(POETRY) run pydocstyle --ignore=D104,D203,D213,D406,D407,D413 tests/ $(SRC_DIRS)
+	$(POETRY) run bandit -r $(SRC_DIRS) -s B104,B610,B611,B702,B703
 
 .PHONY: format
 format: $(INSTALL_STAMP)
-	$(POETRY) run isort ./tests/ $(NAME)
-	$(POETRY) run black ./tests/ $(NAME)
+	$(POETRY) run isort tests/ $(SRC_DIRS)
+	$(POETRY) run black tests/ $(SRC_DIRS)
 
 .PHONY: precommit
 precommit: $(INSTALL_STAMP) $(PRECOMMIT_CONF)
@@ -94,7 +96,7 @@ precommit: $(INSTALL_STAMP) $(PRECOMMIT_CONF)
 
 .PHONY: test
 test: $(INSTALL_STAMP)
-	$(POETRY) run pytest ./tests/ --cov-report term-missing --cov-fail-under 100 --cov $(NAME)
+	$(POETRY) run pytest tests/ --cov-report term-missing --cov-fail-under 100 --cov $(SRC_DIRS)
 
 .PHONY: docker
 docker: $(INSTALL_STAMP)
