@@ -119,7 +119,6 @@ repos:
     rev: 1.7.1
     hooks:
       - id: bandit
-        exclude: tests,docs,db,logs
         args:
         - -r
         - -s B104,B610,B611,B702,B703
