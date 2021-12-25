@@ -1,5 +1,4 @@
-""" ORM classes for the flaskr application.
-"""
+"""ORM classes for the flaskr application."""
 from hashlib import md5
 
 from flask_login import UserMixin
@@ -97,7 +96,7 @@ class User(UserMixin, BaseModel):
             None
 
         Returns:
-            list: A list of all hosts for the user.
+            list[Hosts]: A list of all hosts for the user.
         """
         hosts = Host.query.filter_by(user_id=self.id)
         return hosts
@@ -108,10 +107,15 @@ class User(UserMixin, BaseModel):
         Args:
             size (int): The size of the avatar
         """
-        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
+        digest = md5(self.email.lower().encode("utf-8")).hexdigest()  # nosec
         return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
 
     def __repr__(self) -> str:
+        """Get a string representation of the user.
+
+        Returns:
+            str: The string representation of the user.
+        """
         return f"User {self.username}[{self.id}] <{self.email}>"
 
 
@@ -151,9 +155,7 @@ class Host(BaseModel):
     MAX_PORT = 65535
 
     __tablename__ = "hosts"
-    __table_args__ = (
-        UniqueConstraint("name", "macaddress", "port", "ipaddress", "interface"),
-    )
+    __table_args__ = (UniqueConstraint("name", "macaddress", "port", "ipaddress", "interface"),)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(MAX_HOSTNAME_LEN))
     macaddress = db.Column(db.String(MAX_MACADDRESS_LEN))
@@ -199,6 +201,11 @@ class Host(BaseModel):
         }
 
     def __repr__(self) -> str:
+        """Get a string representation of the host.
+
+        Returns:
+            str: The string representation of the host.
+        """
         return f"Host {self.name} <Mac: {self.macaddress}, port: {self.port} IP: {self.ipaddress}, interface: {self.interface}>"
 
 

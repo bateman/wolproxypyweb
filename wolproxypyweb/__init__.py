@@ -1,5 +1,4 @@
-"""
-Initialize the Flask application.
+"""Initialize the Flask application.
 
 It loads the configuration from the config.py file, initializes the Flask application,
 creates the database and the tables, and registers the routes.

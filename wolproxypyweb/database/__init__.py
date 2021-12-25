@@ -1,15 +1,15 @@
-""" Database instance creation module.
-"""
+"""Database instance creation module."""
+import os
 
 from flask.app import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from config import db_config, logger
+from config.config import DATABASE_DIR
 
 
 def create_database(web_app: Flask) -> SQLAlchemy:
-    """
-    Create the database.
+    """Create the database.
 
     Args:
         init (bool): If True, the database will be initialized.
@@ -18,7 +18,7 @@ def create_database(web_app: Flask) -> SQLAlchemy:
         db (SQLAlchemy): The database.
     """
     # set the database uniform resource identifier for the database
-    db_uri = f"{db_config['database']['protocol']}{db_config['database']['path']}{db_config['database']['name']}"
+    db_uri = f"{db_config['database']['protocol']}{DATABASE_DIR}{os.sep}{db_config['database']['name']}"
     logger.info("Database URI: %s", db_uri)
     web_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 

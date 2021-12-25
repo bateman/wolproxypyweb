@@ -1,3 +1,4 @@
+"""Define the forms for the web application."""
 import re
 
 from flask_wtf import FlaskForm
@@ -19,6 +20,19 @@ from wolproxypyweb.database.models import Host, User
 
 
 class LoginForm(FlaskForm):
+    """Login form.
+
+    This form is used to log in to the application.
+
+    Attributes:
+        username (StringField): Username.
+        password (PasswordField): Password.
+        remember_me (BooleanField): Remember me.
+
+    Extends:
+        FlaskForm
+    """
+
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     remember_me = BooleanField("Remember Me")
@@ -26,6 +40,20 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
+    """Registration form.
+
+    This form is used to register a new user.
+
+    Attributes:
+        username (StringField): Username.
+        email (StringField): Email.
+        password (PasswordField): Password.
+        password2 (PasswordField): Password confirmation.
+
+    Extends:
+        FlaskForm
+    """
+
     username = StringField(
         "Username",
         validators=[
@@ -41,28 +69,71 @@ class RegistrationForm(FlaskForm):
             Length(min=User.MIN_PASSWORD_LEN, max=User.MAX_PASSWORD_LEN),
         ],
     )
-    password2 = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
-    )
+    password2 = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Register")
 
-    def validate_username(self, username):
+    def validate_username(self, username: StringField) -> None:
+        """Validate the username.
+
+        Args:
+            username (StringField): The username.
+
+        Raises:
+            ValidationError: If the username is not valid.
+
+        Returns:
+            None
+        """
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError("Please use a different username.")
 
-    def validate_email(self, email):
+    def validate_email(self, email: StringField) -> None:
+        """Validate the email.
+
+        Args:
+            email (StringField): The email.
+
+        Raises:
+            ValidationError: If the email is not valid.
+
+        Returns:
+            None
+        """
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Please use a different email address.")
 
 
 class ResetPasswordRequestForm(FlaskForm):
+    """Reset password request form.
+
+    This form is used to request a password reset.
+
+    Attributes:
+        email (StringField): Email.
+
+    Extends:
+        FlaskForm
+    """
+
     email = StringField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Request Password Reset")
 
 
 class ResetPasswordForm(FlaskForm):
+    """Reset password form.
+
+    This form is used to reset a password.
+
+    Attributes:
+        password (PasswordField): Password.
+        password_confirm (PasswordField): Password confirmation.
+
+    Extends:
+        FlaskForm
+    """
+
     password = PasswordField(
         "Password",
         validators=[
@@ -70,13 +141,25 @@ class ResetPasswordForm(FlaskForm):
             Length(min=User.MIN_PASSWORD_LEN, max=User.MAX_PASSWORD_LEN),
         ],
     )
-    password_confirm = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
-    )
+    password_confirm = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Request Password Reset")
 
 
 class EditUserProfileForm(FlaskForm):
+    """Edit user profile form.
+
+    This form is used to edit a user profile.
+
+    Attributes:
+        username (StringField): Username.
+        email (StringField): Email.
+        password (PasswordField): Password.
+        password_confirm (PasswordField): Password confirmation.
+
+    Extends:
+        FlaskForm
+    """
+
     username = StringField(
         "Username",
         validators=[
@@ -92,23 +175,62 @@ class EditUserProfileForm(FlaskForm):
             Length(min=User.MIN_PASSWORD_LEN, max=User.MAX_PASSWORD_LEN),
         ],
     )
-    password_confirm = PasswordField(
-        "Repeat Password", validators=[EqualTo("password")]
-    )
+    password_confirm = PasswordField("Repeat Password", validators=[EqualTo("password")])
     submit = SubmitField("Update")
 
-    def __init__(self, original_username: str, original_email: str):
+    def __init__(
+        self,
+        original_username: str,
+        original_email: str,
+        password: str = None,
+        password_confirm: str = None,
+    ) -> None:
+        """Initialize the form.
+
+        Args:
+            original_username (str): The username.
+            original_email (str): The email.
+            password (str): The password.
+            password_confirm (str): The password confirmation.
+
+        Returns:
+            None
+        """
         super().__init__()
         self.original_username = original_username
         self.original_email = original_email
+        self.password = password if password == "" else ""  # nosec
+        self.password_confirm = password_confirm if password_confirm == "" else ""  # nosec
 
-    def validate_username(self, username):
+    def validate_username(self, username: StringField) -> None:
+        """Validate the username.
+
+        Args:
+            username (StringField): The username.
+
+        Raises:
+            ValidationError: If the username is not valid.
+
+        Returns:
+            None
+        """
         if username.data != self.original_username:
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError("Please, use a different username.")
 
-    def validate_email(self, email):
+    def validate_email(self, email: StringField) -> None:
+        """Validate the email.
+
+        Args:
+            email (StringField): The email.
+
+        Raises:
+            ValidationError: If the email is not valid.
+
+        Returns:
+            None
+        """
         if email.data != self.original_email:
             user = User.query.filter_by(email=self.email.data).first()
             if user is not None:
@@ -116,10 +238,20 @@ class EditUserProfileForm(FlaskForm):
 
 
 class HostForm(FlaskForm):
-    regex = (
-        r"^(?:[0-9A-Fa-f]{2}([:-]?)[0-9A-Fa-f]{2})(?:(?:\1|\.)"
-        "(?:[0-9A-Fa-f]{2}([:-]?)[0-9A-Fa-f]{2})){2}$"
-    )
+    """Host form.
+
+    Attributes:
+        name (StringField): The name of the host to wake.
+        ip (StringField): The ip of the host.
+        mac (StringField): The mac of the host.
+        port (IntegerField): The port of the host.
+        interface (StringField): The interface for sending the packet.
+
+    Extends:
+        FlaskForm
+    """
+
+    regex = r"^(?:[0-9A-Fa-f]{2}([:-]?)[0-9A-Fa-f]{2})(?:(?:\1|\.)(?:[0-9A-Fa-f]{2}([:-]?)[0-9A-Fa-f]{2})){2}$"
 
     name = StringField(
         "Hostname",
@@ -136,18 +268,28 @@ class HostForm(FlaskForm):
             Regexp(regex=regex, flags=re.IGNORECASE),
         ],
     )
-    port = IntegerField(
-        "Port", validators=[Optional(), NumberRange(Host.MIN_PORT, Host.MAX_PORT)]
-    )
+    port = IntegerField("Port", validators=[Optional(), NumberRange(Host.MIN_PORT, Host.MAX_PORT)])
     ipaddress = StringField("IP address", validators=[Optional(), IPAddress(ipv4=True)])
     interface = StringField("Interface", validators=[Optional(), IPAddress(ipv4=True)])
 
 
 class AddHostForm(HostForm):
+    """Add host form.
+
+    Extends:
+        HostForm
+    """
+
     submit = SubmitField("Save")
     wake = SubmitField("Wake on LAN")
 
 
 class EditHostForm(HostForm):
+    """Edit host form.
+
+    Extends:
+        HostForm
+    """
+
     hiddenid = HiddenField()
     submit = SubmitField("Save")

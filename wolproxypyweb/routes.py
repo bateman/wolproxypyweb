@@ -1,7 +1,12 @@
+"""Definiton of the web app routes."""
+from re import S
+from typing import Any
+
 import requests
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from werkzeug.wrappers import Response
 
 from config import ApiConfig, logger
 from wolproxypyweb import app, db
@@ -18,7 +23,8 @@ from wolproxypyweb.forms import (
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index", methods=["GET", "POST"])
 @login_required
-def home() -> str:
+def home() -> Any:
+    """Render the home page."""
     form = AddHostForm()
     if form.validate_on_submit():
         host = Host(
@@ -59,7 +65,12 @@ def home() -> str:
 
 @app.route("/wake/<hostid>")
 @login_required
-def wake_host(hostid: int) -> str:
+def wake_host(hostid: int) -> Response:
+    """Wake a host using the wol api.
+
+    Args:
+        hostid (int): The id of the host to wake.
+    """
     try:
         host = Host.query.filter_by(id=hostid).first()
     except SQLAlchemyError as sqe:
@@ -80,7 +91,8 @@ def wake_host(hostid: int) -> str:
 
 @app.route("/hosts", methods=["GET", "POST"])
 @login_required
-def edit_hosts() -> str:
+def edit_hosts() -> Any:
+    """Render the edit hosts page."""
     form = EditHostForm()
     if form.validate_on_submit():
         host = Host(
@@ -129,7 +141,12 @@ def edit_hosts() -> str:
 
 @app.route("/delete/<hostid>")
 @login_required
-def delete_host(hostid: int) -> str:
+def delete_host(hostid: int) -> Response:
+    """Delete host from database.
+
+    Args:
+        hostid (int): Host id to delete.
+    """
     host = Host.query.filter_by(id=hostid).first()
     try:
         db.session.delete(host)
@@ -144,6 +161,14 @@ def delete_host(hostid: int) -> str:
 @app.route("/get/<hostid>")
 @login_required
 def get(hostid: int) -> str:
+    """Return the host configuration as a JSON string.
+
+    Args:
+        hostid (int): The id of the host to return.
+
+    Returns:
+        str: The host configuration as a JSON string.
+    """
     try:
         host = Host.query.filter_by(id=hostid).first()
     except SQLAlchemyError as sqe:
@@ -153,7 +178,8 @@ def get(hostid: int) -> str:
 
 
 @app.route("/login", methods=["GET", "POST"])
-def login() -> str:
+def login() -> Any:
+    """Render the login page."""
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     form = LoginForm(remember_me=True)
@@ -168,7 +194,8 @@ def login() -> str:
 
 
 @app.route("/loginnav", methods=["POST"])
-def login_navbar() -> str:
+def login_navbar() -> Response:
+    """Login from navbar."""
     user = User.query.filter_by(username=request.form["navbarusername"]).first()
     if user is None or not user.check_password(request.form["navbarpassword"]):
         flash("Invalid username or password")
@@ -182,13 +209,15 @@ def login_navbar() -> str:
 
 
 @app.route("/logout")
-def logout():
+def logout() -> Response:
+    """Logout the current user."""
     logout_user()
     return redirect(url_for("home"))
 
 
 @app.route("/register", methods=["GET", "POST"])
-def register():
+def register() -> Any:
+    """Render the registration page."""
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     form = RegistrationForm()
@@ -207,7 +236,8 @@ def register():
 
 @app.route("/user", methods=["GET", "POST"])
 @login_required
-def edit_profile():
+def edit_profile() -> Any:
+    """Render the edit profile form."""
     form = EditUserProfileForm(current_user.username, current_user.email)
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -225,5 +255,6 @@ def edit_profile():
 
 
 @app.route("/about")
-def about():
+def about() -> str:
+    """Render the about page."""
     return render_template("about.html", title="About")

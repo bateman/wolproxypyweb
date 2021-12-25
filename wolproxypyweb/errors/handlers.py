@@ -1,11 +1,16 @@
+"""Handle errors for invalid request and return custom error pages."""
+from typing import Any
+
 from flask import jsonify, render_template, request
 from werkzeug.http import HTTP_STATUS_CODES
+from werkzeug.wrappers import Response
 
+from config import logger
 from wolproxypyweb import db
 from wolproxypyweb.errors import bp
 
 
-def api_error_response(status_code, message=None):
+def _api_error_response(status_code: int, message: str = None) -> Response:
     payload = {"error": HTTP_STATUS_CODES.get(status_code, "Unknown error")}
     if message:
         payload["message"] = message
@@ -14,27 +19,26 @@ def api_error_response(status_code, message=None):
     return response
 
 
-def bad_request(message):
-    return api_error_response(400, message)
-
-
-def wants_json_response():
-    return (
-        request.accept_mimetypes["application/json"]
-        >= request.accept_mimetypes["text/html"]
-    )
+def _wants_json_response() -> bool:
+    return request.accept_mimetypes["application/json"] >= request.accept_mimetypes["text/html"]
 
 
 @bp.app_errorhandler(404)
-def not_found_error(error):
-    if wants_json_response():
-        return api_error_response(404)
+def not_found_error(error) -> Any:
+    """Return a custom 404 error."""
+    logger.error("Raised exception %s" % error)
+    """Return a JSON response for 404 errors."""
+    if _wants_json_response():
+        return _api_error_response(404)
     return render_template("errors/404.html"), 404
 
 
 @bp.app_errorhandler(500)
-def internal_error(error):
+def internal_error(error) -> Any:
+    """Return a custom 500 error."""
+    logger.error("Raised exception %s" % error)
+    logger.error("Rolling back database")
     db.session.rollback()
-    if wants_json_response():
-        return api_error_response(500)
+    if _wants_json_response():
+        return _api_error_response(500)
     return render_template("errors/500.html"), 500
