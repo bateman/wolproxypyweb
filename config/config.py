@@ -1,5 +1,4 @@
-""" Configuration file for the application.
-"""
+"""Configuration file for the application."""
 import configparser
 import logging
 import logging.config
@@ -43,6 +42,8 @@ pretty_errors.configure(
 
 # Api
 class ApiConfig:
+    """Configuration for invoking the REST API."""
+
     API_PROTO = os.environ.get("API_PROTOCOL", "http")
     API_HOST = os.environ.get("API_HOST", "0.0.0.0")
     API_PORT = os.environ.get("API_PORT", "8000")
@@ -57,5 +58,7 @@ load_dotenv(dotenv_path=Path(BASE_DIR, ".env"))
 
 
 class FlaskConfig:
+    """Configuration for the Flask application."""
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get("SECRET_KEY") or os.urandom(24).hex()

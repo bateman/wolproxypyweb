@@ -37,7 +37,7 @@ flake8 = "^4.0.1"
 black = "^21.12b0"
 pylint = "^2.12.2"
 mypy = "^0.920"
-bandit = {extras = ["toml"], version = "^1.7.1"}
+bandit = "^1.7.1"
 pre-commit = "^2.16.0"
 pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
@@ -59,4 +59,9 @@ skip_gitignore = true
 
 [tool.mypy]
 ignore_missing_imports = true
-warn_unused_configs = true
+
+[tool.bandit]
+skips = ["B104","B610","B611","B702","B703"]
+
+[tool.pydocstyle]
+ignore = "D104,D203,D213,D406,D407,D413"
