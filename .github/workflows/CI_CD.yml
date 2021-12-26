@@ -18,7 +18,6 @@ jobs:
     - uses: Gr1N/setup-poetry@v7
       with:
         poetry-preview: true
-    - run: poetry self update --preview
     - run: poetry --version
     - name: Install dependencies
       run: make install
