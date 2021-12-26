@@ -112,6 +112,7 @@ repos:
     rev: 6.1.1
     hooks:
       - id: pydocstyle
+        additional_dependencies: [toml]
         args:
         - --ignore=D104,D203,D213,D406,D407,D413
 
