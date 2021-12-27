@@ -51,7 +51,7 @@ update: pyproject.toml
 production: $(PRODUCTION_STAMP)
 $(PRODUCTION_STAMP): pyproject.toml poetry.lock
 	@if [ -z $(POETRY) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
-	$(POETRY) install --no-root --no-dev --no-interaction
+	$(POETRY) install --no-root --without dev --no-interaction
 	touch $(PRODUCTION_STAMP)
 
 build: $(BUILD_STAMP)
