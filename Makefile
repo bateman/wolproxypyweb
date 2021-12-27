@@ -37,7 +37,6 @@ $(INSTALL_STAMP): pyproject.toml
 	$(POETRY) install --no-root
 	$(POETRY) lock --no-update
 	$(POETRY) run pre-commit install
-	$(POETRY) run pre-commit autoupdate
 	touch $(INSTALL_STAMP)
 
 update: pyproject.toml
