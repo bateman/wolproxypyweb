@@ -15,8 +15,8 @@
         {{ host.interface }}
     </td>
     <td>
-        <a href="{{url_for('delete_host', hostid=host.id)}}">
-            <img alt="Delete" src="{{url_for('.static', filename='images/trash.png')}}" width="25">
+        <a href="{{url_for('main.delete_host', hostid=host.id)}}">
+            <img alt="Delete" src="{{url_for('static', filename='images/trash.png')}}" width="25">
         </a>
     </td>
 </tr>

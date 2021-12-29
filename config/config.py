@@ -62,3 +62,6 @@ class FlaskConfig:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get("SECRET_KEY") or os.urandom(24).hex()
+    SQLALCHEMY_DATABASE_URI = (
+        f"{db_config['database']['protocol']}{DATABASE_DIR}{os.sep}{db_config['database']['name']}"
+    )

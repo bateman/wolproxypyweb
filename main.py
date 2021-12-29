@@ -1,5 +1,10 @@
 """The entry point for the Flask application."""
-from wolproxypyweb import app
+from config import logger
+from wolproxypyweb import create_app, db
+from wolproxypyweb.database import create_database
+
+app = create_app()
+create_database(db, app)
 
 
 def run() -> None:
@@ -14,6 +19,7 @@ def run() -> None:
     Returns:
         None
     """
+    logger.info("Starting the wolproxypyweb server.")
     app.run(host="0.0.0.0", debug=False)
 
 
