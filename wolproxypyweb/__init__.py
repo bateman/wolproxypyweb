@@ -6,20 +6,43 @@ creates the database and the tables, and registers the routes.
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
-from config import FlaskConfig
-from wolproxypyweb.database import create_database
+from config import FlaskConfig, logger
 
-app = Flask(__name__)
-app.config.from_object(FlaskConfig)
-bootstrap = Bootstrap(app)
-login = LoginManager(app)
-login.login_view = "login"
+db = SQLAlchemy()
+login = LoginManager()
+bootstrap = Bootstrap()
 
-db = create_database(app)
 
-from wolproxypyweb import errors, routes
-from wolproxypyweb.database import models
-from wolproxypyweb.errors import bp as errors_bp
+def create_app(config_class=FlaskConfig):
+    """Initialize the Flask application.
 
-app.register_blueprint(errors_bp)
+    It loads the configuration from the config_class object, initializes the Flask application.
+
+    Args:
+        config_class (FlaskConfig): The configuration class.
+
+    Returns:
+        app (Flask): The Flask application.
+    """
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+
+    db.init_app(app)
+    login.init_app(app)
+    login.login_view = "auth.login"
+    login.login_message = "Please log in to access this page."
+    bootstrap.init_app(app)
+
+    from wolproxypyweb.main import bp as main_bp
+
+    app.register_blueprint(main_bp)
+    from wolproxypyweb.auth import bp as auth_bp
+
+    app.register_blueprint(auth_bp, url_prefix="/auth")
+    from wolproxypyweb.errors import bp as errors_bp
+
+    app.register_blueprint(errors_bp)
+
+    return app

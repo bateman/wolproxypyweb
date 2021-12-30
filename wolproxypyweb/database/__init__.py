@@ -1,29 +1,20 @@
-"""Database instance creation module."""
-import os
-
-from flask.app import Flask
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from config import db_config, logger
-from config.config import DATABASE_DIR
+from config import logger
+from wolproxypyweb.database import models
 
 
-def create_database(web_app: Flask) -> SQLAlchemy:
-    """Create the database.
+def create_database(db: SQLAlchemy, app: Flask) -> None:
+    """Create the database and the tables.
 
     Args:
-        init (bool): If True, the database will be initialized.
+        db (SQLAlchemy): The database.
+        app (Flask): The Flask application.
 
     Returns:
-        db (SQLAlchemy): The database.
+        None
     """
-    # set the database uniform resource identifier for the database
-    db_uri = f"{db_config['database']['protocol']}{DATABASE_DIR}{os.sep}{db_config['database']['name']}"
-    logger.info("Database URI: %s", db_uri)
-    web_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-
-    # create an instance of the database module
-    logger.info("Creating instance of the database.")
-    db = SQLAlchemy(web_app)
-
-    return db
+    with app.app_context():
+        db.create_all()
+        logger.info("Database created.")

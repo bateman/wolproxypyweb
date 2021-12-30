@@ -210,4 +210,3 @@ class Host(BaseModel):
 
 
 logger.info("ORM classes loaded.")
-db.create_all()

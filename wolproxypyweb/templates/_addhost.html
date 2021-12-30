@@ -15,8 +15,8 @@
         {{ host.interface }}
     </td>
     <td>
-        <a href="{{url_for('wake_host', hostid=host.id)}}">
-            <img alt="Wake" src="{{url_for('.static', filename='images/wol.png')}}" width="20">
+        <a href="{{url_for('main.wake_host', hostid=host.id)}}">
+            <img alt="Wake" src="{{url_for('static', filename='images/wol.png')}}" width="20">
         </a>
     </td>
 </tr>

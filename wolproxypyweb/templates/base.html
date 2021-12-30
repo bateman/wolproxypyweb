@@ -8,7 +8,7 @@
 {% block styles %}
     {{super()}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url_for('.static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
 
@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="{{url_for('.static', filename='js/scripts.js')}}"></script>
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
     {{super()}}
 {% endblock %}
 
@@ -36,8 +36,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{url_for('home')}}">
-            <img src="{{url_for('.static', filename='images/logo.svg')}}" alt="logo" height="24" class="d-inline-block align-text-center">
+          <a class="navbar-brand" href="{{url_for('main.home')}}">
+            <img src="{{url_for('static', filename='images/logo.svg')}}" alt="logo" height="24" class="d-inline-block align-text-center">
             wolproxypy
           </a>
         </div>
@@ -45,18 +45,18 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="nav-item"> <a class="nav-link" href="{{url_for('home')}}">
+            <li class="nav-item"> <a class="nav-link" href="{{url_for('main.home')}}">
                 <span class="glyphicon glyphicon-home"></span> Home
               </a></li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('edit_hosts')}}">
+              <a class="nav-link" href="{{url_for('main.edit_hosts')}}">
                 <span class="glyphicon glyphicon-edit"></span> Edit
               </a>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-question-sign"></span> Help</span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{url_for('about')}}">About</a></li>
+                <li><a href="{{url_for('main.about')}}">About</a></li>
                 <li><a href="https://wolproxypy.readthedocs.io/en/latest/">ReadTheDocs</a></li>
                 <li class="divider"></li>
                 <li><a href="https://github.com/bateman/wolproxypy">wolproxypy Core</a></li>
@@ -79,7 +79,7 @@
                         <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
                       </div>
                       or
-                      <form class="form" role="form" method="post" action="{{url_for('login_navbar')}}" accept-charset="UTF-8" id="loginnav">
+                      <form class="form" role="form" method="post" action="{{url_for('auth.login_navbar')}}" accept-charset="UTF-8" id="loginnav">
                         <div class="form-group">
                           <label class="sr-only" for="navbarusername">Username</label>
                           <input type="username" class="form-control" id="navbarusername" name="navbarusername" placeholder="Username" required>
@@ -87,7 +87,7 @@
                         <div class="form-group">
                           <label class="sr-only" for="navbarpassword">Password</label>
                           <input type="password" class="form-control" id="navbarpassword" name="navbarpassword" placeholder="Password" required>
-                          <div class="help-block text-right"><a href="{{url_for('login')}}">Forgot the password?</a></div>
+                          <div class="help-block text-right"><a href="{{url_for('auth.login')}}">Forgot the password?</a></div>
                         </div>
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary btn-block">Sign in</button>
@@ -100,7 +100,7 @@
                       </form>
                     </div>
                     <div class="bottom text-center">
-                      New here? <a href="{{url_for('register')}}"><b>Register</b></a>
+                      New here? <a href="{{url_for('auth.register')}}"><b>Register</b></a>
                     </div>
                   </div>
                 </li>
@@ -117,12 +117,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <li>
-                                <a class="dropdown-item" href="{{url_for('edit_profile')}}">
+                                <a class="dropdown-item" href="{{url_for('main.edit_profile')}}">
                                     <img src="{{ current_user.get_avatar(16) }}"> Edit profile
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{url_for('logout')}}">
+                                <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                                     <span class="glyphicon glyphicon-log-out"></span> Logout
                                 </a>
                             </li>
