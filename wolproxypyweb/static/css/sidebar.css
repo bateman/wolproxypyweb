@@ -1,0 +1,42 @@
+.sidebar-nav {
+    background-color: #222222;
+    overflow-x: hidden;
+    margin-left: -11pt;
+    border-radius: 5px;
+}
+
+.sidebar-nav a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #9d9d9d;
+    display: block;
+}
+
+.sidebar-nav a:hover  {
+    color: #ffffff;
+}
+
+.sidebar-nav li {
+    padding-left: 12pt;
+    padding-top: 2pt;
+    padding-right: 10pt;
+}
+
+.sidebar-nav-active {
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #080808;
+    margin-right: 10pt;
+}
+
+.sidebar-nav h5 {
+    color: #ffffff;
+    padding-left: 20pt;
+    padding-top: 5pt;
+    padding-right: 10pt;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar-nav {padding-top: 15px;}
+    .sidebar-nav a {font-size: 18px;}
+}

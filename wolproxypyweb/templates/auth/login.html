@@ -9,9 +9,11 @@
     </div>
 </div>
 <br>
+{% if app_config.get("REGISTRATION_ENABLED") == "True" %}
 <p>New User? <a href="{{url_for('auth.register')}}">Click to Register!</a></p>
-<p>
+{% endif %}
+<!--p>
     Forgot Your Password?
-    <a href="/passwordreset">Click to Reset It</a>
-</p>
+    <a href="">Click to Reset It</a>
+</p-->
 {% endblock %}

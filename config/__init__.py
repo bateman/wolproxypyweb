@@ -1,1 +1,1 @@
-from .config import ApiConfig, FlaskConfig, db_config, logger
+from .config import FlaskConfig, app_config, db_config, logger

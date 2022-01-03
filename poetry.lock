@@ -276,6 +276,19 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
+name = "easysettings"
+version = "4.0.1"
+description = "Easily set and retrieve application settings.\n"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+all = ["pyyaml (>=3.12)", "toml (>=0.10.0)"]
+toml = ["toml (>=0.10.0)"]
+yaml = ["pyyaml (>=3.12)"]
+
+[[package]]
 name = "email-validator"
 version = "1.1.3"
 description = "A robust email syntax and deliverability validation library for Python 2.x/3.x."
@@ -1462,7 +1475,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c0ff89796403493e03357a6ca75c759caa82dd17926b0b07132e1bb804ae5e3b"
+content-hash = "062621a1cf44f5001f90668c1ecad185e0c5a4a1ecb64759f03133bce4d92ac3"
 
 [metadata.files]
 appdirs = [
@@ -1667,6 +1680,9 @@ dnspython = [
 dominate = [
     {file = "dominate-2.6.0-py2.py3-none-any.whl", hash = "sha256:84b5f71ed30021193cb0faa45d7776e1083f392cfe67a49f44e98cb2ed76c036"},
     {file = "dominate-2.6.0.tar.gz", hash = "sha256:76ec2cde23700a6fc4fee098168b9dee43b99c2f1dd0ca6a711f683e8eb7e1e4"},
+]
+easysettings = [
+    {file = "EasySettings-4.0.1.tar.gz", hash = "sha256:175f31bd19c97e60bf55998b98c2395fd1df043cfc6bde1405e73ea8a1389b4e"},
 ]
 email-validator = [
     {file = "email_validator-1.1.3-py2.py3-none-any.whl", hash = "sha256:5675c8ceb7106a37e40e2698a57c056756bf3f272cfa8682a4f87ebd95d8440b"},

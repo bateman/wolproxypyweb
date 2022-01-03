@@ -5,7 +5,7 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user
 from werkzeug.wrappers import Response
 
-from config import logger
+from config import app_config, logger
 from wolproxypyweb import db
 from wolproxypyweb.auth import bp
 from wolproxypyweb.auth.forms import LoginForm, RegistrationForm
@@ -26,7 +26,7 @@ def login() -> Any:
         login_user(user, remember=form.remember_me.data)
         logger.info("User %s logged in." % user.username)
         return redirect(url_for("main.home"))
-    return render_template("auth/login.html", title="Sign In", form=form)
+    return render_template("auth/login.html", title="Sign In", form=form, app_config=app_config)
 
 
 @bp.route("/loginnav", methods=["POST"])
@@ -60,14 +60,19 @@ def register() -> Any:
         return redirect(url_for("main.home"))
     form = RegistrationForm()
     if form.validate_on_submit():
+        try:
+            is_admin = form.is_admin.data
+        except AttributeError:
+            is_admin = False
         user = User(
             username=form.username.data,
             email=form.email.data,
             password=form.password.data,
+            is_admin=is_admin,
         )
         db.session.add(user)
         db.session.commit()
         logger.info("User %s registered." % user.username)
         flash("You are registered. Please, log in.")
         return redirect(url_for("auth.login"))
-    return render_template("auth/register.html", title="Register", form=form)
+    return render_template("auth/register.html", title="Register", form=form, app_config=app_config)

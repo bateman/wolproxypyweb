@@ -7,7 +7,7 @@ from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from werkzeug.wrappers import Response
 
-from config import ApiConfig, logger
+from config import app_config, logger
 from wolproxypyweb import db
 from wolproxypyweb.database.models import Host
 from wolproxypyweb.main import bp
@@ -44,13 +44,16 @@ def home() -> Any:
         elif form.wake.data:
             try:
                 logger.info("Waking %s" % host)
-                url = f"{ApiConfig.API_PROTO}://{ApiConfig.API_HOST}:{ApiConfig.API_PORT}/mac/{host.macaddress}"
+                url = (
+                    f"{app_config.get('API_PROTO')}://{app_config.get('API_HOST')}:"
+                    f"{app_config.get('API_PORT')}/mac/{host.macaddress}"
+                )
                 logger.info("Sending request to %s" % url)
                 response = requests.get(url=url)
                 logger.debug("Response %s" % response)
-                flash("Wake-on-lan packet sent to %s" % host)
+                flash("Wake-on-lan packet sent to %s" % host, "success")
             except Exception as e:
-                flash("Error sending wol packet to host")
+                flash("Failed to send wol packet to host", "warning")
                 logger.error("Raised exception %s" % e)
         return redirect(url_for("main.home"))
     hosts = current_user.get_hosts()
@@ -72,13 +75,16 @@ def wake_host(hostid: int) -> Response:
         logger.error("Raised exception %s" % sqe)
     logger.info("Waking %s" % host)
     try:
-        url = f"{ApiConfig.API_PROTO}://{ApiConfig.API_HOST}:{ApiConfig.API_PORT}/mac/{host.macaddress}"
+        url = (
+            f"{app_config.get('API_PROTO')}://{app_config.get('API_HOST')}:"
+            f"{app_config.get('API_PORT')}/mac/{host.macaddress}"
+        )
         logger.info("Sending request to %s" % url)
         response = requests.get(url=url)
         logger.info("Response %s" % response)
-        flash("Wake-on-lan packet sent to %s" % host)
+        flash("Wake-on-lan packet sent to %s" % host, "success")
     except Exception as e:
-        flash("Error sending wol packet to host")
+        flash("Error sending wol packet to host", "warning")
         logger.error("Raised exception %s" % e)
     return redirect(url_for("main.home"))
 
@@ -123,10 +129,10 @@ def edit_hosts() -> Any:
                     db.session.commit()
                     flash("Host added")
             except IntegrityError as ie:
-                flash("Host configuration already exists, skipping")
+                flash("Host configuration already exists, skipping", "warning")
                 logger.error("Raised exception %s" % ie)
             except SQLAlchemyError as sqe:
-                flash("Error adding host")
+                flash("Error adding host", "danger")
                 logger.error("Raised exception %s" % sqe)
         return redirect(url_for("main.edit_hosts"))
     hosts = current_user.get_hosts()
@@ -147,7 +153,7 @@ def delete_host(hostid: int) -> Response:
         logger.info("Removing %s" % host)
         db.session.commit()
     except SQLAlchemyError as sqe:
-        flash("Error removing host")
+        flash("Error removing host", "danger")
         logger.error("Raised exception %s" % sqe)
     return redirect(url_for("main.edit_hosts"))
 
@@ -166,7 +172,7 @@ def get(hostid: int) -> str:
     try:
         host = Host.query.filter_by(id=hostid).first()
     except SQLAlchemyError as sqe:
-        flash("Error querying host")
+        flash("Error querying host", "danger")
         logger.error("Raised exception %s" % sqe)
     return host.to_json()
 

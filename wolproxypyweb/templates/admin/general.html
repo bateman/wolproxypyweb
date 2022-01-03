@@ -1,0 +1,36 @@
+{% extends "sidebar-base.html" %}
+
+{% block app_content %}
+{{macro.build_site_navigation(pages=pages, selected="General")}}
+<h1>General</h1>
+<div>
+  <div class="form-check form-check-group">
+    <div class="toggles">
+      <label for="toggle-registration">
+        Registration
+        {% if app_config.get("REGISTRATION_ENABLED") == "True" %}
+        <input type="checkbox" id="toggle-registration" aria-labelledby="toggle-registration-help" checked onclick="checkbox_change('toggle-registration')">
+        {% else %}
+        <input type="checkbox" id="toggle-registration" aria-labelledby="toggle-registration-help" onclick="checkbox_change('toggle-registration')">
+        {% endif %}
+        <span class="lever"></span>
+      </label>
+    </div>
+    <small id="toggle-registration-help" class="form-text">When disabled, no new users can be registered.</small>
+  </div>
+  <div class="form-check form-check-group">
+    <div class="toggles">
+      <label for="toggle-adminstration">
+        Administration
+        {% if app_config.get("ADMIN_ENABLED") == "True" %}
+        <input type="checkbox" id="toggle-adminstration" aria-labelledby="toggle-adminstration-help" checked onclick="checkbox_change('toggle-adminstration')">
+        {% else %}
+        <input type="checkbox" id="toggle-adminstration" aria-labelledby="toggle-adminstration-help" onclick="checkbox_change('toggle-adminstration')">
+        {% endif %}
+        <span class="lever"></span>
+      </label>
+    </div>
+    <small id="toggle-adminstration-help" class="form-text">When disabled, new users cannot be registered as admin. Only an existing admin user can change their status.</small>
+  </div>
+</div>
+{% endblock %}

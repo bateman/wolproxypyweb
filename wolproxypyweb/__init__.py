@@ -38,9 +38,15 @@ def create_app(config_class=FlaskConfig):
     from wolproxypyweb.main import bp as main_bp
 
     app.register_blueprint(main_bp)
+
     from wolproxypyweb.auth import bp as auth_bp
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
+
+    from wolproxypyweb.admin import bp as admin_bp
+
+    app.register_blueprint(admin_bp, url_prefix="/admin")
+
     from wolproxypyweb.errors import bp as errors_bp
 
     app.register_blueprint(errors_bp)

@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
+from config import app_config
 from wolproxypyweb.database.models import User
 
 
@@ -36,6 +37,7 @@ class RegistrationForm(FlaskForm):
         email (StringField): Email.
         password (PasswordField): Password.
         password2 (PasswordField): Password confirmation.
+        is_admin (BooleanField): Whether the use is an admin.
 
     Extends:
         FlaskForm
@@ -57,6 +59,8 @@ class RegistrationForm(FlaskForm):
         ],
     )
     password2 = PasswordField("Repeat Password", validators=[DataRequired(), EqualTo("password")])
+    if app_config["ADMIN_ENABLED"] == "True":
+        is_admin = BooleanField("Administrator?", default=False)
     submit = SubmitField("Register")
 
     def validate_username(self, username: StringField) -> None:

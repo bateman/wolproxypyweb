@@ -5,7 +5,11 @@
 <h1>Register</h1>
 <div class="row">
     <div class="col-md-4">
-        {{ wtf.quick_form(form, button_map={'submit':'primary'}) }}
+        {% if app_config.get("REGISTRATION_ENABLED") == "True" %}
+            {{ wtf.quick_form(form, button_map={'submit':'primary'}) }}
+        {% else %}
+            <p>Registration has been disabled. Contact the administrator.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

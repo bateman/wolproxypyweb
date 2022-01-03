@@ -1,0 +1,14 @@
+{% macro build_site_navigation(pages, selected) %}
+<div class="col-sm-2" id="sidebar" role="navigation">
+    <div class="sidebar-nav">
+        <h5 class="sidebar-nav">Configuration</h5>
+        <ul>
+            {% for page in pages %}
+            <a class="sidebar-nav" href="{{page.url}}">
+                <li class="sidebar-nav {% if selected == page.name %}sidebar-nav-active{% endif %}">{{page.name}}</li>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endmacro %}
