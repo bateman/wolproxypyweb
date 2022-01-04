@@ -1,4 +1,4 @@
-<tr class="with-click" onclick="select_row('{{ host.id }}')" id="addhost-{{ host.id }}">
+<tr class="with-click" onclick="select_host_row('{{ host.id }}')" id="addhost-{{ host.id }}">
     <td>
         {{ host.name }}
     </td>
@@ -9,7 +9,9 @@
         {{ host.ipaddress }}
     </td>
     <td>
+        {% if host.port != 0 %}
         {{ host.port }}
+        {% endif %}
     </td>
     <td>
         {{ host.interface }}

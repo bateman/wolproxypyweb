@@ -1,0 +1,25 @@
+{% extends "sidebar-base.html" %}
+
+{% block app_content %}
+{{macro.build_site_navigation(pages=pages, selected="Users")}}
+<h1>Users</h1>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Gravatar</th>
+                <th>Username</th>
+                <th>E-mail</th>
+                <th>Admin?</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                {% include 'admin/_users.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

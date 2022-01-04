@@ -1,0 +1,5 @@
+{% extends "sidebar-base.html" %}
+
+{% block app_content %}
+{{macro.build_site_navigation(pages=pages, selected="None")}}
+{% endblock %}

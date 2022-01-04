@@ -134,3 +134,4 @@ dmypy.json
 .*.stamp
 .env
 db/
+config/app.config

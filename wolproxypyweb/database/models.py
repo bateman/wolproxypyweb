@@ -35,12 +35,24 @@ class User(UserMixin, BaseModel):
     username = db.Column(db.String(MAX_USERNAME_LEN), index=True, unique=True)
     email = db.Column(db.String(MAX_EMAIL_LEN), index=True, unique=True)
     password_hash = db.Column(db.String(MAX_PASSWORD_LEN))
+    is_admin = db.Column(db.Boolean, default=False)
 
-    def __init__(self, username: str, email: str, password: str) -> None:
-        """Initialize a new user."""
+    def __init__(self, username: str, email: str, password: str, is_admin: bool) -> None:
+        """Initialize a new user.
+
+        Args:
+            username (str): The username for the user.
+            email (str): The email for the user.
+            password (str): The password for the user.
+            is_admin (bool): True if the user is an admin.
+
+        Returns:
+            None
+        """
         self.email = email
         self.username = username
         self.set_password(password)
+        self.is_admin = is_admin
 
     def __eq__(self, other: object) -> bool:
         """Compare two users.
@@ -49,11 +61,11 @@ class User(UserMixin, BaseModel):
             other (object): The other to compare to.
 
         Returns:
-            equal (bool): True if the usernames are equal.
+            equal (bool): True if the ids are equal.
         """
         equal = False
         if isinstance(other, User):
-            equal = self.number == other.number
+            equal = self.id == other.id
         return equal
 
     def set_password(self, password: str) -> None:
@@ -77,17 +89,6 @@ class User(UserMixin, BaseModel):
             bool: True if the password matches the hashed password.
         """
         return check_password_hash(self.password_hash, password)
-
-    def set_email(self, email: str) -> None:
-        """Set the email for the user.
-
-        Args:
-            email (str): The email to set.
-
-        Returns:
-            None
-        """
-        self.email = email
 
     def get_hosts(self) -> list:
         """Get all hosts for the user.

@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pretty_errors
 from dotenv import load_dotenv
+from easysettings import EasySettings
 from rich.logging import RichHandler
 
 # Directories
@@ -24,6 +25,8 @@ DATABASE_DIR.mkdir(parents=True, exist_ok=True)
 logging.config.fileConfig(Path(CONFIG_DIR, "logging.config"))
 logger = logging.getLogger("root")
 logger.handlers[0] = RichHandler(markup=True)
+if os.environ.get("FLASK_DEBUG"):
+    logger.setLevel(logging.DEBUG)
 
 # Configure error formatter
 pretty_errors.configure(
@@ -40,13 +43,30 @@ pretty_errors.configure(
 )
 
 
-# Api
-class ApiConfig:
-    """Configuration for invoking the REST API."""
+# App
+class AppConfig(EasySettings):
+    """Configuration options for the app."""
 
-    API_PROTO = os.environ.get("API_PROTOCOL", "http")
-    API_HOST = os.environ.get("API_HOST", "0.0.0.0")
-    API_PORT = os.environ.get("API_PORT", "8000")
+    def __init__(self):
+        """Initialize the app config."""
+        super().__init__(name="wolproxypyweb")
+        self.configfile = os.path.join(CONFIG_DIR, "app.config")
+        if not os.path.exists(self.configfile):
+            logger.debug("No app config file found. Creating new one in %s", self.configfile)
+            self.configfile_create()
+            self.set("ADMIN_ENABLED", "True")
+            self.set("REGISTRATION_ENABLED", "True")
+            self.set("API_PROTO", "http")
+            self.set("API_HOST", "0.0.0.0")
+            self.set("API_PORT", "8000")
+            self.set("API_KEY", "")
+            self.save()
+        else:
+            logger.debug("Loading app config file %s", self.configfile)
+            self.load_file()
+
+
+app_config = AppConfig()
 
 
 # Flask

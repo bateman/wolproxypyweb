@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "macros/sidebar.html" as macro %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/sidebar.css')}}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='js/sidebar.js')}}"></script>
+    {{super()}}
+{% endblock %}

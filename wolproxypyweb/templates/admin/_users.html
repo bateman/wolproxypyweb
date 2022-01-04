@@ -1,0 +1,26 @@
+<tr>
+    <td id="user-id">
+        {{ user.id }}
+    </td>
+    <td>
+        <img alt="Gravatar" src="{{ user.get_avatar(16) }}" width="25">
+    </td>
+    <td>
+        {{ user.username }}
+    </td>
+    <td>
+        {{ user.email }}
+    </td>
+    <td>
+        {% if user.is_admin %}
+            <input type="checkbox" id="checkbox-admin" onclick="admin_checkbox_change(event, '{{ user.id }}')" checked>
+        {% else %}
+            <input type="checkbox" id="checkbox-admin" onclick="admin_checkbox_change(event, '{{ user.id }}')">
+        {% endif %}
+    </td>
+    <td>
+        <a href="{{url_for('admin.delete_user', userid=user.id)}}" onclick="confirm_delete(event, '{{ currentuserid }}', '{{ user.id }}')">
+            <img alt="Delete" src="{{url_for('static', filename='images/trash.png')}}" width="25">
+        </a>
+    </td>
+</tr>

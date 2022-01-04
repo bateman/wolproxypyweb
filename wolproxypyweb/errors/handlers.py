@@ -23,6 +23,16 @@ def _wants_json_response() -> bool:
     return request.accept_mimetypes["application/json"] >= request.accept_mimetypes["text/html"]
 
 
+@bp.app_errorhandler(403)
+def forbidden_error(error) -> Any:
+    """Return a custom 403 error."""
+    logger.error("Raised exception %s" % error)
+    """Return a JSON response for 403 errors."""
+    if _wants_json_response():
+        return _api_error_response(404)
+    return render_template("errors/403.html"), 403
+
+
 @bp.app_errorhandler(404)
 def not_found_error(error) -> Any:
     """Return a custom 404 error."""

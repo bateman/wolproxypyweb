@@ -1,0 +1,14 @@
+{% extends "sidebar-base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+{{macro.build_site_navigation(pages=pages, selected="SSO")}}
+<h1>Single Sign-on</h1>
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form, button_map={'submit':'primary'}) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
