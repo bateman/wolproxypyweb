@@ -1,4 +1,5 @@
 """Definiton of the web app routes."""
+import json
 from typing import Any
 
 import requests
@@ -14,6 +15,24 @@ from wolproxypyweb.main import bp
 from wolproxypyweb.main.forms import AddHostForm, EditHostForm, EditUserProfileForm
 
 
+def _call_wolproxypyapi(host: Host) -> Response:
+    """Call the API to wake up the host."""
+    url = f"{app_config.get('API_PROTO')}://{app_config.get('API_HOST')}:" f"{app_config.get('API_PORT')}/wol"
+    data = {
+        "host": {
+            "mac_address": host.macaddress,
+            "ip_address": host.ipaddress,
+            "port": host.port,
+            "interface": host.interface,
+        },
+        "key": {"key": app_config.get("API_KEY")},
+    }
+
+    logger.debug(json.dumps(data))
+    logger.info("Calling the API endpoint %s" % url)
+    return requests.post(url=url, data=json.dumps(data))
+
+
 @bp.route("/", methods=["GET", "POST"])
 @bp.route("/index", methods=["GET", "POST"])
 @login_required
@@ -25,7 +44,7 @@ def home() -> Any:
             name=form.name.data,
             macaddress=form.macaddress.data,
             ipaddress=form.ipaddress.data or "",
-            port=form.port.data or 0,
+            port=form.port.data or 9,
             interface=form.interface.data or "",
             user_id=current_user.id,
         )
@@ -44,14 +63,12 @@ def home() -> Any:
         elif form.wake.data:
             try:
                 logger.info("Waking %s" % host)
-                url = (
-                    f"{app_config.get('API_PROTO')}://{app_config.get('API_HOST')}:"
-                    f"{app_config.get('API_PORT')}/mac/{host.macaddress}"
-                )
-                logger.info("Sending request to %s" % url)
-                response = requests.get(url=url)
+                response = _call_wolproxypyapi(host)
                 logger.info("Response %s" % response)
-                flash(f"Wake-on-lan packet sent to {host}.", "success")
+                if response.status_code == 200:
+                    flash(f"Wake-on-lan packet sent to {host}.", "success")
+                else:
+                    flash(f"Error sending wake-on-lan packet to {host}.", "warning")
             except Exception as e:
                 flash("Failed to send wol packet to host", "warning")
                 logger.error("Raised exception %s." % e)
@@ -75,14 +92,13 @@ def wake_host(hostid: int) -> Response:
         logger.error("Raised exception %s" % sqe)
     logger.info("Waking %s" % host)
     try:
-        url = (
-            f"{app_config.get('API_PROTO')}://{app_config.get('API_HOST')}:"
-            f"{app_config.get('API_PORT')}/mac/{host.macaddress}"
-        )
-        logger.info("Sending request to %s" % url)
-        response = requests.get(url=url)
+        logger.info("Waking %s" % host)
+        response = _call_wolproxypyapi(host)
         logger.info("Response %s" % response)
-        flash(f"Wake-on-lan packet sent to {host}", "success")
+        if response.status_code == 200:
+            flash(f"Wake-on-lan packet sent to {host}.", "success")
+        else:
+            flash(f"Error sending wake-on-lan packet to {host}.", "warning")
     except Exception as e:
         flash("Error sending wol packet to host", "warning")
         logger.error("Raised exception %s" % e)
@@ -99,7 +115,7 @@ def edit_hosts() -> Any:
             name=form.name.data,
             macaddress=form.macaddress.data,
             ipaddress=form.ipaddress.data or "",
-            port=form.port.data or 0,
+            port=form.port.data or 9,
             interface=form.interface.data or "",
             user_id=current_user.id,
         )
@@ -111,7 +127,7 @@ def edit_hosts() -> Any:
                     host.name = form.name.data
                     host.macaddress = form.macaddress.data
                     host.ipaddress = form.ipaddress.data or ""
-                    host.port = form.port.data or 0
+                    host.port = form.port.data or 9
                     host.interface = form.interface.data or ""
                     db.session.commit()
                     flash("Host updated")
@@ -121,7 +137,7 @@ def edit_hosts() -> Any:
                         name=form.name.data,
                         macaddress=form.macaddress.data,
                         ipaddress=form.ipaddress.data or "",
-                        port=form.port.data or 0,
+                        port=form.port.data or 9,
                         interface=form.interface.data or "",
                         user_id=current_user.id,
                     )

@@ -171,7 +171,7 @@ class Host(BaseModel):
         macaddress: str,
         user_id: int,
         ipaddress: str = "",
-        port: int = 0,
+        port: int = 9,
         interface: str = "",
     ) -> None:
         """Initialize a new host."""

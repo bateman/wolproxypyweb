@@ -17,4 +17,4 @@ def create_database(db: SQLAlchemy, app: Flask) -> None:
     """
     with app.app_context():
         db.create_all()
-        logger.info("Database created.")
+        logger.info("Database initialized.")

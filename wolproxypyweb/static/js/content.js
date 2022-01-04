@@ -7,10 +7,7 @@ function select_host_row(host_id) {
             var host = JSON.parse(text);
             document.getElementById('name').value = host.name;
             document.getElementById('macaddress').value = host.macaddress;
-            if (host.port > 0)
-                document.getElementById('port').value = parseInt(host.port);
-            else
-                document.getElementById('port').value = '';
+            document.getElementById('port').value = parseInt(host.port);
             document.getElementById('ipaddress').value = host.ipaddress;
             document.getElementById('interface').value = host.interface;
             document.getElementById('hiddenid').value = host_id;

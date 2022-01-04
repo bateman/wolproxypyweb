@@ -6,20 +6,15 @@ LABEL maintainer="Fabio Calefato <fabio.calefato@uniba.it>"
 LABEL org.label-schema.license="MIT"
 
 # Install dependencies
-COPY Makefile Makefile
-COPY pyproject.toml pyproject.toml
-COPY poetry.lock poetry.lock
+COPY requirements.txt requirements.txt
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl
-ENV POETRY_PREVIEW=1
-RUN curl -sSL https://install.python-poetry.org | python -
-ENV PATH="${PATH}:/root/.local/bin"
-RUN poetry config virtualenvs.create false
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc build-essential \
-    && rm -rf /var/lib/apt/lists/* \
-    && make production \
-    && apt-get purge -y --auto-remove gcc build-essential
+    && apt-get install -y --no-install-recommends \
+    && apt-get dist-upgrade -y \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN pip install --upgrade pip setuptools wheel build
+RUN pip install -r requirements.txt
 
 # Copy
 COPY wolproxypyweb wolproxypyweb
