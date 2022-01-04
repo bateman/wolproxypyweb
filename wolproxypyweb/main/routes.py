@@ -50,11 +50,11 @@ def home() -> Any:
                 )
                 logger.info("Sending request to %s" % url)
                 response = requests.get(url=url)
-                logger.debug("Response %s" % response)
-                flash("Wake-on-lan packet sent to %s" % host, "success")
+                logger.info("Response %s" % response)
+                flash(f"Wake-on-lan packet sent to {host}.", "success")
             except Exception as e:
                 flash("Failed to send wol packet to host", "warning")
-                logger.error("Raised exception %s" % e)
+                logger.error("Raised exception %s." % e)
         return redirect(url_for("main.home"))
     hosts = current_user.get_hosts()
     return render_template("index.html", title="Home", hosts=hosts, form=form)
@@ -82,7 +82,7 @@ def wake_host(hostid: int) -> Response:
         logger.info("Sending request to %s" % url)
         response = requests.get(url=url)
         logger.info("Response %s" % response)
-        flash("Wake-on-lan packet sent to %s" % host, "success")
+        flash(f"Wake-on-lan packet sent to {host}", "success")
     except Exception as e:
         flash("Error sending wol packet to host", "warning")
         logger.error("Raised exception %s" % e)

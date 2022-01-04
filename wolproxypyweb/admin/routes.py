@@ -130,17 +130,17 @@ def change_option(option: str, value: str) -> Response:
     elif value == "true":
         value = "True"
     else:
-        flash("Error setting invalid option value %s" % value, "danger")
+        flash(f"Error setting invalid option value {value}", "danger")
         logger.error("Option value must be either true or false.")
 
     if option == "adminstration":
         app_config.setsave("ADMIN_ENABLED", value)
-        logger.info("Changed adminstration status to %s." % value)
+        logger.info(f"Changed adminstration status to {value}.")
     elif option == "registration":
         app_config.setsave("REGISTRATION_ENABLED", value)
-        logger.info("Changed registration status to %s." % value)
+        logger.info(f"Changed registration status to {value}.")
     else:
-        flash("Error setting invalid option %s" % option, "danger")
+        flash(f"Error setting invalid option {option}", "danger")
         logger.error("Option %s is not valid." % option)
 
     return redirect(url_for("admin.admin"))
@@ -162,7 +162,7 @@ def set_admin(userid: int, is_admin: bool) -> Response:
     """
     user = User.query.filter_by(id=userid).first()
     if userid == "1":
-        flash("Forbidden: User %s is the superuser.", user.username, "warning")
+        flash(f"Forbidden: User {user.username} is the superuser.", "warning")
         logger.debug("Attempt to change admin status of user with id 1: forbidden.")
     else:
         if not user:
@@ -177,7 +177,7 @@ def set_admin(userid: int, is_admin: bool) -> Response:
         user.is_admin = is_admin
         db.session.commit()
         flash(f"Admin status of user {user.username} changed to {is_admin}.")
-        logger.debug("Changed admin status of %s" % user)
+        logger.debug("Changed admin status.")
     return redirect(url_for("admin.admin"))
 
 
@@ -196,12 +196,12 @@ def delete_user(userid: int) -> Response:
     """
     user = User.query.filter_by(id=userid).first()
     if userid == "1":
-        flash("Forbidden: User %s is the superuser." % user.username, "warning")
+        flash(f"Forbidden: User {user.username} is the superuser.", "warning")
     else:
         try:
             if user == current_user:
                 flash("You have deleted yourself and have been logged out.", "warning")
-                logger.debug("Self deletion of user %s." % user.username)
+                logger.debug("Self deletion of user.")
             logger.info("Removing user")
             db.session.delete(user)
             db.session.commit()

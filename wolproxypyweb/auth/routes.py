@@ -24,7 +24,7 @@ def login() -> Any:
             flash("Invalid username or password.")
             return redirect(url_for("auth.login"))
         login_user(user, remember=form.remember_me.data)
-        logger.info("User %s logged in." % user.username)
+        logger.info("User logged in.")
         return redirect(url_for("main.home"))
     return render_template("auth/login.html", title="Sign In", form=form, app_config=app_config)
 
@@ -48,7 +48,7 @@ def login_navbar() -> Response:
 @bp.route("/logout")
 def logout() -> Response:
     """Logout the current user."""
-    logger.info("Logging out user %s." % current_user.username)
+    logger.info("Logging out user.")
     logout_user()
     return redirect(url_for("main.home"))
 
@@ -72,7 +72,7 @@ def register() -> Any:
         )
         db.session.add(user)
         db.session.commit()
-        logger.info("User %s registered." % user.username)
+        logger.info("User registered.")
         flash("You are registered. Please, log in.")
         return redirect(url_for("auth.login"))
     return render_template("auth/register.html", title="Register", form=form, app_config=app_config)
