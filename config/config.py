@@ -52,7 +52,7 @@ class AppConfig(EasySettings):
         super().__init__(name="wolproxypyweb")
         self.configfile = os.path.join(CONFIG_DIR, "app.config")
         if not os.path.exists(self.configfile):
-            logger.debug("No app config file found. Creating new one in %s", self.configfile)
+            logger.info("No app config file found. Creating new one in %s", self.configfile)
             self.configfile_create()
             self.set("ADMIN_ENABLED", "True")
             self.set("REGISTRATION_ENABLED", "True")
@@ -62,7 +62,7 @@ class AppConfig(EasySettings):
             self.set("API_KEY", "")
             self.save()
         else:
-            logger.debug("Loading app config file %s", self.configfile)
+            logger.info("Loading app config file %s", self.configfile)
             self.load_file()
 
 
