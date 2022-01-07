@@ -46,7 +46,7 @@ repos:
           - pep8-naming==0.12.1
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.29.1
+    rev: v2.31.0
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
@@ -90,6 +90,7 @@ repos:
         language: python
         types: [python]
         additional_dependencies: *flake8_deps
+        exclude: ^(docs/.*|logs/.*|db/.*|dist/.*|migrations/.*)$
         args:
         # making isort line length compatible with black
         - "--max-line-length=120"
@@ -102,17 +103,19 @@ repos:
     rev: v0.930
     hooks:
       - id: mypy
+        types: [python]
         additional_dependencies:
           - types-dataclasses
           - types-requests
         args: [--ignore-missing-imports]
-        exclude: ^(docs/)
+        exclude: ^(docs/.*|logs/.*|db/.*|dist/.*|migrations/.*)$
 
   - repo: https://github.com/pycqa/pydocstyle
     rev: 6.1.1
     hooks:
       - id: pydocstyle
         additional_dependencies: [toml]
+        exclude: ^(docs/.*|logs/.*|db/.*|dist/.*|migrations/.*)$
         args:
         - --ignore=D104,D203,D213,D406,D407,D413
 
