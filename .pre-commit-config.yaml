@@ -46,7 +46,7 @@ repos:
           - pep8-naming==0.12.1
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.29.1
+    rev: v2.31.0
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
@@ -106,7 +106,7 @@ repos:
           - types-dataclasses
           - types-requests
         args: [--ignore-missing-imports]
-        exclude: ^(docs/)
+        exclude: ^(docs/|migrations/|db/|logs/|dist/)
 
   - repo: https://github.com/pycqa/pydocstyle
     rev: 6.1.1

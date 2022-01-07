@@ -6,6 +6,7 @@ creates the database and the tables, and registers the routes.
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from config import FlaskConfig, logger
@@ -30,6 +31,7 @@ def create_app(config_class=FlaskConfig):
     app.config.from_object(config_class)
 
     db.init_app(app)
+    Migrate(app, db)
     login.init_app(app)
     login.login_view = "auth.login"
     login.login_message = "Please log in to access this page."
