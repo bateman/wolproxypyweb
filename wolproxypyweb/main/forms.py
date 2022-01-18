@@ -19,7 +19,7 @@ from wtforms.validators import (
 from wolproxypyweb.database.models import Host, User
 
 
-class EditUserProfileForm(FlaskForm):
+class EditUserProfileForm(FlaskForm):  # lgtm [py/missing-call-to-init]
     """Edit user profile form.
 
     This form is used to edit a user profile.
