@@ -9,21 +9,19 @@ on:
 
 jobs:
   build:
-    name: Build and test
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
-        python-version: 3.9
+        python-version: 3.12
     - uses: Gr1N/setup-poetry@v8
       with:
         poetry-preview: true
     - run: poetry --version
     - name: Install dependencies
       run: make install
-    #- name: Run tests
-    #  run: make test
 
   docker:
     name: Build and push Docker image
@@ -37,7 +35,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and push image
         id: docker_build
         uses: docker/build-push-action@v5
         with:
