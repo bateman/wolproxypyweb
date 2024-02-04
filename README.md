@@ -2,8 +2,10 @@
 ![GitHub](https://img.shields.io/github/license/bateman/wolproxypyweb)
 
 [![CI_CD](https://github.com/bateman/wolproxypyweb/actions/workflows/CI_CD.yml/badge.svg)](https://github.com/bateman/wolproxypyweb/actions/workflows/CI_CD.yml)
-[![Docker](https://img.shields.io/docker/cloud/build/bateman/wolproxypy?label=Docker&style=flat)](https://hub.docker.com/r/bateman/wolproxypyweb/builds)
 [![Documentation Status](https://readthedocs.org/projects/wolproxypy/badge/?version=latest)](https://wolproxypyweb.readthedocs.io/en/latest/?badge=latest)
+
+![Docker Pulls](https://img.shields.io/docker/pulls/bateman/wolproxypyweb)
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/bateman/wolproxypyweb)
 
 [![Known Vulnerabilities](https://snyk.io/test/github/bateman/wolproxypyweb/badge.svg)](https://snyk.io/test/github/bateman/wolproxypyweb)
 ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/bateman/wolproxypyweb)
