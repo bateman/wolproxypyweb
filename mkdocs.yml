@@ -10,7 +10,7 @@ repo_name: bateman/wolproxypyweb
 edit_uri: "" #disables edit button
 
 # Copyright
-copyright: MIT License 2021, Fabio Calefato
+copyright: MIT License 2021-2024, Fabio Calefato
 
 # Configuration
 theme:
@@ -23,11 +23,7 @@ plugins:
       default_handler: python
       handlers:
         python:
-          rendering:
-            show_source: false
-      custom_templates: templates
-      watch:
-        - wolproxypyweb
+          paths: [wolproxypyweb]
 
 nav:
   - Home: index.md
