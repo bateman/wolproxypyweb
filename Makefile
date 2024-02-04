@@ -61,8 +61,9 @@ $(BUILD_STAMP): pyproject.toml poetry.lock
 export: $(EXPORT_STAMP)
 $(EXPORT_STAMP): pyproject.toml poetry.lock
 	@if [ -z $(POETRY) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
-	$(POETRY) export -f requirements.txt --output requirements-dev.txt --dev --without-hashes
 	$(POETRY) export -f requirements.txt --output requirements.txt --without-hashes
+	$(POETRY) export -f requirements.txt --output requirements-dev.txt --with dev --without-hashes
+	$(POETRY) export -f requirements.txt --output requirements-docs.txt --with docs --without-hashes
 	touch $(EXPORT_STAMP)
 
 docs: export
