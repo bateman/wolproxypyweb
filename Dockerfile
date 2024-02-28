@@ -9,12 +9,20 @@ LABEL org.label-schema.license="MIT"
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install curl -y --no-install-recommends \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get install cargo -y --no-install-recommends \
-    && pip install --no-cache-dir -r requirements.txt
+    && rm -rf /var/lib/apt/lists/*
+
+# Set shell to /bin/bash -o pipefail 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Get Rust; NOTE: using sh for better compatibility with other base images
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+# Add .cargo/bin to PATH
+ENV PATH="${HOME}/.cargo/bin:${PATH}"
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy
 COPY wolproxypyweb wolproxypyweb
