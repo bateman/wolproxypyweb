@@ -14,7 +14,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set shell to /bin/bash -o pipefail 
+# Set shell to /bin/bash -o pipefail
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Get Rust; NOTE: using sh for better compatibility with other base images
@@ -22,7 +22,7 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # Add .cargo/bin to PATH
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-RUN pip install --upgrade pip \
+RUN pip install --upgrade pip setuptools wheel \
     && pip install --no-cache-dir -r requirements.txt
 
 # Copy
