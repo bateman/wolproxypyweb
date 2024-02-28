@@ -1,4 +1,5 @@
 """The entry point for the Flask application."""
+
 from config import logger
 from wolproxypyweb import create_app, db
 from wolproxypyweb.database import create_database
