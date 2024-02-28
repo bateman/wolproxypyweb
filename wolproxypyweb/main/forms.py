@@ -1,5 +1,7 @@
 """Define the forms for the web application."""
+
 import re
+from typing import Optional as TypingOptional
 
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, PasswordField, StringField, SubmitField
@@ -56,8 +58,8 @@ class EditUserProfileForm(FlaskForm):  # lgtm [py/missing-call-to-init]
         self,
         original_username: str,
         original_email: str,
-        password: str = None,
-        password_confirm: str = None,
+        password: TypingOptional[str] = None,
+        password_confirm: TypingOptional[str] = None,
     ) -> None:
         """Initialize the form.
 

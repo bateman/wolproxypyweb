@@ -1,5 +1,6 @@
 """Handle errors for invalid request and return custom error pages."""
-from typing import Any
+
+from typing import Any, Optional
 
 from flask import jsonify, render_template, request
 from werkzeug.http import HTTP_STATUS_CODES
@@ -10,7 +11,7 @@ from wolproxypyweb import db
 from wolproxypyweb.errors import bp
 
 
-def _api_error_response(status_code: int, message: str = None) -> Response:
+def _api_error_response(status_code: int, message: Optional[str] = None) -> Response:
     payload = {"error": HTTP_STATUS_CODES.get(status_code, "Unknown error")}
     if message:
         payload["message"] = message
