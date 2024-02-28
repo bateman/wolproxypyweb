@@ -9,7 +9,7 @@ LABEL org.label-schema.license="MIT"
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN apt-get update \
-    && apt-get install curl build-essential -y --no-install-recommends \
+    && apt-get install curl build-essential libssl-dev libffi-dev python3-dev pkg-config -y --no-install-recommends \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
