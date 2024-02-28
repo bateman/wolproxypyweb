@@ -3,7 +3,7 @@ ci:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -19,7 +19,7 @@ repos:
       - id: check-docstring-first
 
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.9.0
+    rev: v1.10.0
     hooks:
       - id: python-check-mock-methods
       - id: python-use-type-annotations
@@ -27,33 +27,33 @@ repos:
       - id: python-check-blanket-noqa
 
   - repo: https://github.com/asottile/yesqa
-    rev: v1.3.0
+    rev: v1.5.0
     hooks:
       - id: yesqa
         additional_dependencies: &flake8_deps
-          - flake8-annotations==2.7.0
-          - flake8-broken-line==0.4.0
-          - flake8-bugbear==21.9.2
-          - flake8-comprehensions==3.7.0
-          - flake8-eradicate==1.2.0
-          - flake8-no-pep420==1.2.0
-          - flake8-quotes==3.3.1
-          - flake8-simplify==0.14.2
-          - flake8-tidy-imports==4.5.0
-          - flake8-type-checking==1.1.0
-          - flake8-typing-imports==1.11.0
-          - flake8-use-fstring==1.3
-          - pep8-naming==0.12.1
+          - flake8-annotations
+          - flake8-broken-line
+          - flake8-bugbear
+          - flake8-comprehensions
+          - flake8-eradicate
+          - flake8-no-pep420
+          - flake8-quotes
+          - flake8-simplify
+          - flake8-tidy-imports
+          - flake8-type-checking
+          - flake8-typing-imports
+          - flake8-use-fstring
+          - pep8-naming
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.31.0
+    rev: v3.15.1
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
         exclude: '^(install|get)-poetry.py$'
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.13.2
     hooks:
       - id: isort
         name: "isort (python)"
@@ -68,7 +68,7 @@ repos:
         - "--skip_gitignore"
 
   - repo: https://github.com/psf/black
-    rev: 21.12b0
+    rev: 24.2.0
     hooks:
       - id: black
         args: # arguments to configure black
@@ -83,7 +83,7 @@ repos:
                     dist"""
 
   - repo: https://github.com/pycqa/flake8
-    rev: 4.0.1
+    rev: 7.0.0
     hooks:
       - id: flake8
         entry: flake8
@@ -100,7 +100,7 @@ repos:
         - "--ignore=E203,E266,E501,W503,F403,F401,E402,B008,FS001,FS003"
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.930
+    rev: v1.8.0
     hooks:
       - id: mypy
         types: [python]
@@ -111,7 +111,7 @@ repos:
         exclude: ^(docs/.*|logs/.*|db/.*|dist/.*|migrations/.*)$
 
   - repo: https://github.com/pycqa/pydocstyle
-    rev: 6.1.1
+    rev: 6.3.0
     hooks:
       - id: pydocstyle
         additional_dependencies: [toml]
@@ -120,7 +120,7 @@ repos:
         - --ignore=D104,D203,D213,D406,D407,D413
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.1
+    rev: 1.7.7
     hooks:
       - id: bandit
         additional_dependencies: [toml]
