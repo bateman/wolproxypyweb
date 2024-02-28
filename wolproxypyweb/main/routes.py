@@ -1,4 +1,5 @@
 """Definiton of the web app routes."""
+
 import json
 from typing import Any
 
@@ -30,7 +31,7 @@ def _call_wolproxypyapi(host: Host) -> Response:
 
     logger.debug(json.dumps(data))
     logger.info("Calling the API endpoint %s" % url)
-    return requests.post(url=url, data=json.dumps(data))
+    return requests.post(url=url, data=json.dumps(data), timeout=5)
 
 
 @bp.route("/", methods=["GET", "POST"])

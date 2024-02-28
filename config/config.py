@@ -1,4 +1,5 @@
 """Configuration file for the application."""
+
 import configparser
 import logging
 import logging.config

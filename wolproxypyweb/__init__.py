@@ -3,6 +3,7 @@
 It loads the configuration from the config.py file, initializes the Flask application,
 creates the database and the tables, and registers the routes.
 """
+
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager

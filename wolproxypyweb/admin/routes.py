@@ -1,4 +1,5 @@
 """Definiton of the admin routes."""
+
 from typing import Any
 
 from flask import abort, flash, redirect, render_template, request, url_for

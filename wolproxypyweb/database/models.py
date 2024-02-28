@@ -1,4 +1,5 @@
 """ORM classes for the flaskr application."""
+
 from hashlib import md5
 
 from flask_login import UserMixin
