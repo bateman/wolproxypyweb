@@ -20,7 +20,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Get Rust; NOTE: using sh for better compatibility with other base images
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 # Add .cargo/bin to PATH
-RUN source "${HOME}/.cargo/env"
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN pip install --no-cache-dir -r requirements.txt
 
