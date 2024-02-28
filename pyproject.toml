@@ -13,7 +13,7 @@ wolproxypyweb = "main:run"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-setuptools = "^60.0.4"
+setuptools = "^65.5.1"
 pretty-errors = "^1.2.25"
 rich = "^13.7.0"
 uvicorn = {extras = ["standard"], version = "^0.27.0"}
