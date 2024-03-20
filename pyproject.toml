@@ -13,7 +13,7 @@ wolproxypyweb = "main:run"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-setuptools = "^60.0.4"
+setuptools = "^65.5.1"
 pretty-errors = "^1.2.25"
 rich = "^13.7.0"
 uvicorn = {extras = ["standard"], version = "^0.27.0"}
@@ -36,7 +36,7 @@ EasySettings = "^4.0.1"
 [tool.poetry.dev-dependencies]
 isort = "^5.13.2"
 flake8 = "^4.0.1"
-black = "^21.12b0"
+black = "^24.3"
 pylint = "^2.12.2"
 mypy = "^0.920"
 bandit = "^1.7.1"
